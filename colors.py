@@ -1,4 +1,8 @@
 class Colors:
+    """
+    Defines the color palette used in the game.
+    Colors are represented as (R, G, B) tuples.
+    """
     dark_grey = (26, 31, 40)
     green = (47, 230, 23)
     red = (232, 18, 18)
@@ -13,6 +17,7 @@ class Colors:
 
     @classmethod
     def get_cell_colors(cls):
+        """Returns a list of colors used for the different tetrominoes."""
         return [
             cls.dark_grey,
             cls.green,

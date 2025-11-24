@@ -2,6 +2,10 @@ import pygame
 from colors import Colors
 
 class Grid:
+    """
+    Represents the game board (20 rows x 10 columns).
+    Handles storing locked blocks and checking for full lines.
+    """
     def __init__(self):
         self.num_rows = 20
         self.num_cols = 10
@@ -10,35 +14,42 @@ class Grid:
         self.colors = Colors.get_cell_colors()
 
     def print_grid(self):
+        """Prints the grid to the console (for debugging)."""
         for row in self.grid:
             print(row)
 
     def is_inside(self, row, column):
+        """Checks if a given position is inside the grid boundaries."""
         if row >= 0 and row < self.num_rows and column >= 0 and column < self.num_cols:
             return True
         return False
 
     def is_empty(self, row, column):
+        """Checks if a specific cell is empty (value 0)."""
         if self.grid[row][column] == 0:
             return True
         return False
 
     def is_row_full(self, row):
+        """Checks if a row is completely filled with blocks."""
         for column in range(self.num_cols):
             if self.grid[row][column] == 0:
                 return False
         return True
 
     def clear_row(self, row):
+        """Clears a specific row by setting all cells to 0."""
         for column in range(self.num_cols):
             self.grid[row][column] = 0
 
     def move_row_down(self, row, num_rows):
+        """Moves a row down by a specified number of rows."""
         for column in range(self.num_cols):
             self.grid[row + num_rows][column] = self.grid[row][column]
             self.grid[row][column] = 0
 
     def clear_full_rows(self):
+        """Checks for and clears all full rows, moving blocks down."""
         completed = 0
         for row in range(self.num_rows - 1, 0, -1):
             if self.is_row_full(row):
@@ -49,11 +60,13 @@ class Grid:
         return completed
 
     def reset(self):
+        """Resets the grid to an empty state."""
         for row in range(self.num_rows):
             for column in range(self.num_cols):
                 self.grid[row][column] = 0
 
     def draw(self, screen):
+        """Draws the grid cells on the screen."""
         for row in range(self.num_rows):
             for column in range(self.num_cols):
                 cell_value = self.grid[row][column]

@@ -1,3 +1,7 @@
+"""
+Main entry point for the Tetris game.
+Initializes Pygame, sets up the display, and runs the main game loop.
+"""
 import pygame
 import sys
 from game import Game
@@ -5,14 +9,17 @@ from colors import Colors
 
 pygame.init()
 
+# UI Fonts
 title_font = pygame.font.Font(None, 40)
 score_surface = title_font.render("Score", True, Colors.white)
 next_surface = title_font.render("Next", True, Colors.white)
 game_over_surface = title_font.render("GAME OVER", True, Colors.white)
 
+# UI Rectangles
 score_rect = pygame.Rect(320, 55, 170, 60)
 next_rect = pygame.Rect(320, 215, 170, 180)
 
+# Screen setup
 screen = pygame.display.set_mode((500, 620))
 pygame.display.set_caption("Python Tetris")
 
@@ -20,6 +27,7 @@ clock = pygame.time.Clock()
 
 game = Game()
 
+# Audio setup
 pygame.mixer.music.load('Sounds/music.wav')
 pygame.mixer.music.play(-1)
 

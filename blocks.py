@@ -2,6 +2,10 @@ from colors import Colors
 import pygame
 
 class Block:
+    """
+    Base class for all Tetromino blocks.
+    Handles position, rotation, and drawing.
+    """
     def __init__(self, id):
         self.id = id
         self.cells = {}
@@ -12,10 +16,12 @@ class Block:
         self.colors = Colors.get_cell_colors()
 
     def move(self, rows, columns):
+        """Moves the block by the specified number of rows and columns."""
         self.row_offset += rows
         self.column_offset += columns
 
     def get_cell_positions(self):
+        """Calculates the absolute position of the block's cells on the grid."""
         tiles = self.cells[self.rotation_state]
         moved_tiles = []
         for position in tiles:
@@ -24,16 +30,19 @@ class Block:
         return moved_tiles
 
     def rotate(self):
+        """Rotates the block 90 degrees clockwise."""
         self.rotation_state += 1
         if self.rotation_state == len(self.cells):
             self.rotation_state = 0
 
     def undo_rotation(self):
+        """Reverts the last rotation (used if rotation causes collision)."""
         self.rotation_state -= 1
         if self.rotation_state == -1:
             self.rotation_state = len(self.cells) - 1
 
     def draw(self, screen, offset_x=11, offset_y=11):
+        """Draws the block on the screen."""
         tiles = self.get_cell_positions()
         for tile in tiles:
             tile_rect = pygame.Rect(offset_x + tile.column * self.cell_size, 
@@ -42,6 +51,7 @@ class Block:
             pygame.draw.rect(screen, self.colors[self.id], tile_rect)
 
 class Position:
+    """Represents a specific row and column on the grid."""
     def __init__(self, row, column):
         self.row = row
         self.column = column
